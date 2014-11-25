@@ -53,7 +53,7 @@ Start your container with:
 
 
 ```no-highlight
-   sudo docker run -p 80:80 \
+   sudo docker run -d -p 80:80 \
    -v /etc/haproxy:/etc/haproxy \
    -e HAPROXY_USERNAME="administrator" \
    -e HAPROXY_URI="/haproxy?adminstats" \
