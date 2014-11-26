@@ -18,7 +18,7 @@ if [ -z "$HAPROXY_USERNAME" ]; then
 fi  
 
 if [ -z "$HAPROXY_URI" ]; then
-    export HAPROXY_URI="\/haproxy?stats"
+    export HAPROXY_URI="/haproxy?stats"
 fi  
 
 
@@ -27,9 +27,9 @@ if [ -n "$HAPROXY_PASSWORD" ]
 then
   if grep "stats auth" /etc/haproxy/haproxy.cfg
   then
-	sed -i -e"s/$PATTERN.*/$PATTERN $HAPROXY_USERNAME:$HAPROXY_PASSWORD/" \
+	sed -i -e"s,$PATTERN.*,$PATTERN $HAPROXY_USERNAME:$HAPROXY_PASSWORD," \
 		/etc/haproxy/haproxy.cfg
-	sed -i -e"s/$PATTERN_URI.*/$PATTERN_URI $HAPROXY_URI/" \
+	sed -i -e"s,$PATTERN_URI.*,$PATTERN_URI ${HAPROXY_URI}," \
 		/etc/haproxy/haproxy.cfg
   else
 	echo "	$PATTERN $HAPROXY_USERNAME:$HAPROXY_PASSWORD" >> \
