@@ -7,7 +7,7 @@ The software stack comprises the following components:
 Name       | Version    | Description
 -----------|------------|------------------------------
 Ubuntu     | Trusty     | Operating system
-MongoDB    | 1.4.24     | Load balancing software
+HAProxy    | 1.4.24     | Load balancing software
 
 ## Usage
 
@@ -32,18 +32,21 @@ Test your deployment:
 
 Start your container with:
 
-* Data volume (which will survive a restart or recreation of the container). The HAProxy configuration is available in /etc/haproxy on the host. 
+* Two volumes (which will survive a restart or recreation of the container). The HAProxy directory is vailable in **/etc/haproxy** on the host and the logs are available in **/var/log/haproxy** on the host.
 
-
-    sudo docker run -d -p 80:80 -v /etc/haproxy:/etc/haproxy --name haproxy dell/haproxy
-
+```no-highlight
+    sudo docker run -d -p 80:80 \ 
+    -v /etc/haproxy:/etc/haproxy \ 
+    -v /var/log/haproxy:/var/log/haproxy \
+    --name haproxy dell/haproxy
+```
 
 You can now make amendments to the haproxy.cfg file from within your host.
 
 
 ### Advanced Example 2
 
-The HAProxy dashboard is enabled by default with no credentials and the default URL is http://localhost/haproxy?stats. To enable the credentials while running the container you have the option of using the default username ‘admin’ and setting a specific password with the default HAProxy dashboard URL, or by providing the three specific settings.
+The HAProxy dashboard is enabled by default with no credentials and the default URL is **http://localhost/haproxy?stats**. To enable the credentials while running the container you have the option of using the default username **admin** and setting a specific password with the default HAProxy dashboard URL, or by providing the three specific settings.
 
 Start your container with:
 
@@ -64,8 +67,7 @@ Start your container with:
 
 You can now test your new credentials, when prompted enter username `administrator` and password `mypass`:
 
-
-   http://localhost/haproxy?adminstats
+    http://localhost/haproxy?adminstats
 
 
 ## Customisation
@@ -86,6 +88,11 @@ The formation of haproxy.cfg file is a block by block configuration of commands 
         server 10.10.10.13:5672  check 
         server 10.10.10.14:5672  check
 ```
+
+### Failover
+
+Failover test, in the example above you would run the command **rabbitmqctl stop_app** on each server RabbitMQ is running one by one and review the dashboard and the logs to see this working.
+
 
 ## Reference
 
