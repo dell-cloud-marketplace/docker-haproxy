@@ -21,10 +21,9 @@ ADD haproxy.cfg /etc/haproxy/haproxy.cfg
 # Add logging configuration
 RUN sed -i '1s/^/$UDPServerRun 514\n/' /etc/rsyslog.d/haproxy.conf
 RUN sed -i '1s/^/$ModLoad imudp\n/' /etc/rsyslog.d/haproxy.conf
-RUN sed -i -e"s,/var/log/haproxy.log.*,/var/log/haproxy/haproxy.log," /etc/rsyslog.d/haproxy.conf
+RUN sed -i -e"s,/var/log/haproxy.log.*,/var/log/haproxy/haproxy.log," \
+	/etc/rsyslog.d/haproxy.conf
 
-RUN mkdir /var/log/haproxy
-RUN ls -la /var/log/haproxy
 RUN cp -r /etc/haproxy /tmp/
 
 # Add scripts
@@ -35,7 +34,7 @@ RUN chmod 755 /*.sh
 
 
 # Set volume directory for HAProxy file
-VOLUME ["/etc/haproxy"]
+VOLUME ["/etc/haproxy","/var/log/haproxy"]
 
 # Expose port 80, for HAProxy dashboard
 EXPOSE 80

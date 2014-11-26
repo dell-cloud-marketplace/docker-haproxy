@@ -12,7 +12,10 @@ if [[ ! "$(ls -A $VOLUME_HOME)" ]]; then
 fi
 
 
+# Add syslog permissions
+chown -R syslog:syslog /var/log/haproxy
 
+# Check username and URI is passed
 if [ -z "$HAPROXY_USERNAME" ]; then
     export HAPROXY_USERNAME="admin"
 fi  
