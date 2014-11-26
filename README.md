@@ -76,7 +76,7 @@ You can now test your new credentials, when prompted enter username `administrat
 
 There are a number of configurations that can be made to the haproxy.cfg file, this includes the load balancing algorithm(round robin, least connections, source, URI, HTTP header and RDP cookie), performance tuning, process management and adding session stickiness with the use of cookies.
 
-The formation of haproxy.cfg file is a block by block configuration of commands with parameters for each specific application. The file starts with a global and a defaults block, which consist of logging, daemon, user and group details etc.  The remaining part of the configuration file is filled with the application configuration to load balance. Below is an example of a RabbitMQ cluster that will load balance between three nodes. This configuration the server and the port address. Balance is the chosen load balancing algorithm, using TCP mode. Finally, there is the server command with the IP addresses. These are the three servers that will fulfil the TCP requests.
+The formation of haproxy.cfg file is a block by block configuration of commands with parameters for each specific application. The file starts with a global and a defaults block, which consist of logging, daemon, user and group details etc.  The remaining part of the configuration file is filled with the application configuration to load balance. Below is an example of a RabbitMQ cluster that will load balance between three nodes. Balance is the chosen load balancing algorithm, using TCP mode. Finally, there is the server command with the IP addresses. These are the three servers that will fulfil the TCP requests.
 
 ```no-highlight
     listen rabbit_cluster 10.10.10.11:5672
