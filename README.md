@@ -93,6 +93,13 @@ The formation of haproxy.cfg file is a block by block configuration of commands 
 
 Failover test, in the example above you would run the command **rabbitmqctl stop_app** on each server RabbitMQ is running one by one and review the dashboard and the logs to see this working.
 
+### Getting Started
+
+The HAProxy configuration is very comprehensive and can be tuned to your requirements, below are some guidelines and documentation as a starting guide.
+
+* [HAProxy Documentation](http://www.haproxy.org/#docs)
+* [HAProxy Configuration Manual](http://cbonte.github.io/haproxy-dconv/configuration-1.4.html)
+
 
 ## Reference
 
