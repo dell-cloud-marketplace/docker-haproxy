@@ -32,7 +32,7 @@ Test your deployment:
 
 Start your container with:
 
-* Two volumes (which will survive a restart or recreation of the container). The HAProxy directory is vailable in **/etc/haproxy** on the host and the logs are available in **/var/log/haproxy** on the host.
+* Two volumes (which will survive a restart or recreation of the container). The HAProxy directory is available in **/etc/haproxy** on the host and the logs are available in **/var/log/haproxy** on the host.
 
 ```no-highlight
     sudo docker run -d -p 80:80 \ 
@@ -41,7 +41,7 @@ Start your container with:
     --name haproxy dell/haproxy
 ```
 
-You can now make amendments to the haproxy.cfg file from within your host.
+You can now make amendments to the haproxy.cfg file from within your host from **/etc/haproxy**.
 
 
 ### Advanced Example 2
@@ -76,7 +76,7 @@ You can now test your new credentials, when prompted enter username `administrat
 
 There are a number of configurations that can be made to the haproxy.cfg file, this includes the load balancing algorithm(round robin, least connections, source, URI, HTTP header and RDP cookie), performance tuning, process management and adding session stickiness with the use of cookies.
 
-The formation of haproxy.cfg file is a block by block configuration of commands with parameters for each specific application. The file starts with a global and a defaults block, which consist of logging, daemon, user and group details etc.  The remaining part of the configuration file is filled with the application configuration to load balance. Below is an example of a RabbitMQ cluster that will load balance between three nodes. Balance is the chosen load balancing algorithm, using TCP mode. Finally, there is the server command with the IP addresses. These are the three servers that will fulfil the TCP requests.
+The formation of haproxy.cfg file is a block by block configuration of commands with parameters for each specific application. The file starts with a global and a defaults block, which consist of logging, daemon, user and group details etc. Below is an example of a RabbitMQ cluster that will load balance between three nodes. Balance is the chosen load balancing algorithm, using TCP mode. Finally, there is the server command with the IP addresses. These are the three servers that will fulfil the TCP requests.
 
 ```no-highlight
     listen rabbit_cluster 10.10.10.11:5672
@@ -91,7 +91,7 @@ The formation of haproxy.cfg file is a block by block configuration of commands 
 
 ### Failover
 
-Failover test, in the example above you would run the command **rabbitmqctl stop_app** on each server RabbitMQ is running one by one and review the dashboard and the logs to see this working.
+Failover test, in the example above you would run the command **rabbitmqctl stop_app** on each server RabbitMQ is running one by one and review the HAProxy dashboard (```http://localhost/haproxy?adminstats```) and the logs to see this working.
 
 ### Getting Started
 
