@@ -35,10 +35,10 @@ Start your container with:
 * Two volumes (which will survive a restart or recreation of the container). The HAProxy directory is available in **/etc/haproxy** on the host and the logs are available in **/var/log/haproxy** on the host.
 
 ```no-highlight
-    sudo docker run -d -p 80:80 \ 
-    -v /etc/haproxy:/etc/haproxy \ 
-    -v /var/log/haproxy:/var/log/haproxy \
-    --name haproxy dell/haproxy
+sudo docker run -d -p 80:80 \
+-v /etc/haproxy:/etc/haproxy \
+-v /var/log/haproxy:/var/log/haproxy \
+--name haproxy dell/haproxy
 ```
 
 You can now make amendments to the haproxy.cfg file from within your host from **/etc/haproxy**.
