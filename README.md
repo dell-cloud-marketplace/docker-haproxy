@@ -79,13 +79,13 @@ There are a number of configurations that can be made to the haproxy.cfg file, t
 The formation of haproxy.cfg file is a block by block configuration of commands with parameters for each specific application. The file starts with a global and a defaults block, which consist of logging, daemon, user and group details etc. Below is an example of a RabbitMQ cluster that will load balance between two nodes. Balance is the chosen load balancing algorithm, using TCP mode. Finally, there is the server command with the IP addresses. These are the two servers that will fulfil the TCP requests.
 
 ```no-highlight
-    listen rabbit_cluster 10.10.10.11:5672
-        balance  roundrobin
-        mode  tcp
-        option  tcpka
-        option  tcplog
-        server rabbit_server1 10.10.10.12:5672  check
-        server rabbit_server2 10.10.10.13:5672  check 
+listen rabbit_cluster 10.10.10.11:5672
+    balance  roundrobin
+    mode  tcp
+    option  tcpka
+    option  tcplog
+    server rabbit_server1 10.10.10.12:5672  check
+    server rabbit_server2 10.10.10.13:5672  check 
 ```
 
 ### Failover
