@@ -56,7 +56,7 @@ sudo docker stop `docker ps -a -q`; sudo docker rm `docker ps -a -q`
 
 Proceed with the next section.
 
-### Example 1: LAMP Load Balancer
+### Example: LAMP Load Balancer
 
 #### Step 1: Create the Configuration File
 Create folder **/etc/haproxy**:
@@ -101,8 +101,8 @@ listen inbound
 
 Note the LAMP servers (**lamp1**, and **lamp2**), in section **inbound**, on the Docker host (IP address **172.17.42.1** is the Docker gateway).
 
-#### Step 2: Start the LAMP Servers
-Start the LAMP servers, as follows:
+#### Step 2: Start the LAMP Containers
+Start the LAMP containers, as follows:
 
 ```no-highlight
 sudo docker run -d -p 8081:80 --name lamp1 dell/lamp:1.0
@@ -116,7 +116,7 @@ The containers will take a few seconds to start up. Check the logs (```sudo dock
 2014-12-12 10:25:15,794 INFO success: apache2 entered RUNNING state...
 ```
 
-#### Step 3: Start HAProxy Container
+#### Step 3: Start the HAProxy Container
 Start the HAProxy container with:
 
 * Two persistent volumes on the host:
@@ -155,9 +155,9 @@ You should see output similar to the following:
 ...: Proxy stats started.
 ...: Proxy inbound started.
 ...: Proxy inbound started.
-...: 172.17.42.1:58212 [...] inbound inbound/lamp1 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
-...: 172.17.42.1:58218 [...] inbound inbound/lamp2 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
-...: 172.17.42.1:58222 [...] inbound inbound/lamp1 0/0/0/1/1 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
+...: ... [...] inbound inbound/lamp1 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
+...: ... [...] inbound inbound/lamp2 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
+...: ... [...] inbound inbound/lamp1 0/0/0/1/1 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
 ```
 
 You can also check the admin interface - user name, **administrator**, password **mypass** - by (again) doing:
@@ -166,55 +166,14 @@ You can also check the admin interface - user name, **administrator**, password 
 https://<ip address>/:8443/haproxy?stats
 ```
 
-### Example 2: RabbitMQ Cluster
-Below is an example of a RabbitMQ cluster that will load balance between two nodes. Balance is the chosen load balancing algorithm, using TCP mode. Finally, there is the server command with the IP addresses. These are the two servers that will fulfil the TCP requests.
+## Getting Started
 
-```no-highlight
-listen rabbit_cluster 10.10.10.11:5672
-    balance  roundrobin
-    mode  tcp
-    option  tcpka
-    option  tcplog
-    server rabbit_server1 10.10.10.12:5672  check
-    server rabbit_server2 10.10.10.13:5672  check 
-```
-
-### Failover
-
-Failover test, in the example above you would run the command **rabbitmqctl stop_app** on each server RabbitMQ is running one by one and review the HAProxy dashboard (```http://localhost/haproxy?adminstats```) and the logs to see this working.
-
-
-
-
-```
-sudo docker run -d -p 80:80 -p 8443:8443 \
-    -v /etc/haproxy:/etc/haproxy \
-    -v /var/log/haproxy:/var/log/haproxy \
-    -e HAPROXY_USERNAME="administrator" \
-    -e HAPROXY_PASSWORD="mypass" \
-    --name haproxy dell/haproxy \
-```
-
-
-### Getting Started
-
-The HAProxy configuration is very comprehensive and can be tuned to your requirements, below are some guidelines and documentation as a starting guide.
+The HAProxy configuration is very comprehensive and can be tuned to your requirements. The following links might assist you:
 
 * [HAProxy Documentation](http://www.haproxy.org/#docs)
 * [HAProxy Configuration Manual](http://cbonte.github.io/haproxy-dconv/configuration-1.4.html)
 
-
 ## Reference
 
 ### Image Details
-
-Based on [CenturyLinkLabs/ctlc-docker-haproxy](https://github.com/CenturyLinkLabs/ctlc-docker-haproxy)
-
-http://blog.haproxy.com/2012/09/04/howto-ssl-native-in-haproxy/
-http://kb.snapt.net/balancer/custom-compile-haproxy-1-5-ssl-support/
-
-http://seanmcgary.com/posts/using-sslhttps-with-haproxy
-
-https://www.digitalocean.com/community/tutorials/how-to-use-haproxy-to-set-up-http-load-balancing-on-an-ubuntu-vps
-
 Pre-built Image   | [https://registry.hub.docker.com/u/dell/haproxy](https://registry.hub.docker.com/u/dell/haproxy) 
