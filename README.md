@@ -37,7 +37,7 @@ View the stats as admin with password hqQfZIrydI4b
 Make a secure note of user name (**admin**) and password (in this case, **hqQfZIrydI4b**), and access the container from your browser:
 
 ```no-highlight 
-https://<ip address>/:8443/haproxy?stats
+https://<ip address>:8443/haproxy?stats
 ```
 
 The browser will warn you that the certificate is not trusted. If you are unclear about how to proceed, please consult your browser's documentation on how to accept the certificate.
