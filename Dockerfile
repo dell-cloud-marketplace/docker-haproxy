@@ -21,7 +21,7 @@ RUN wget http://www.haproxy.org/download/1.5/src/haproxy-1.5.9.tar.gz && \
     tar -xzf haproxy-1.5.9.tar.gz && \
     cd haproxy-1.5.9 && \
     make TARGET=linux2628 USE_OPENSSL=1 && \
-    sudo make install
+    make install
 
 # Create an SSL certificate
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout \
