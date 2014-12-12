@@ -1,5 +1,5 @@
-#docker-haproxy
-This is a base Docker image to run [HAProxy]( http://www.haproxy.org/) – is an open-source high availability proxy software. Providing the mechanism for load balancing with TCP and HTTP applications.
+# docker-haproxy
+This image installs [HAProxy]( http://www.haproxy.org/), an open-source, high performance TCP/HTTP load balancer.
 
 ## Components
 The software stack comprises the following components:
@@ -10,23 +10,43 @@ Ubuntu     | Trusty     | Operating system
 HAProxy    | 1.4.24     | Load balancing software
 
 ## Usage
+The default settings for the image do **not** create a load balancing container. This requires manual configuration, which we will discuss shortly.
+
+Let's start with a container which illustrates the admin interface:
+
+```
+sudo docker run -d -p 8443:8443 --name haproxy dell/haproxy
+```
+
+Check the container logs for the administrator password:
+
+```no-highlight
+```
+
+TBC
 
 ### Start the container
 
 To start your container with:
 
-* A named container ("haproxy")
-* Host port 80 mapped to container port 80 (default admin port)
-
 Do:
 
-    sudo docker run -d -p 80:80 --name haproxy dell/haproxy
+    sudo docker run -d -p 8080:8080 -p 80:80 --name haproxy dell/haproxy
 
 
 Test your deployment:
 
     http://localhost/haproxy?stats
 
+```no-highlight
+listen inbound
+    bind     *:80
+    option   httpchk GET /
+    retries  3
+    balance  roundrobin
+    server   lamp1 172.17.42.1:8081 check inter 5s
+    server   lamp2 172.17.42.1:8082 check inter 5s
+```
 
 ### Advanced Example 1
 
@@ -105,5 +125,12 @@ The HAProxy configuration is very comprehensive and can be tuned to your require
 ### Image Details
 
 Based on [CenturyLinkLabs/ctlc-docker-haproxy](https://github.com/CenturyLinkLabs/ctlc-docker-haproxy)
+
+http://blog.haproxy.com/2012/09/04/howto-ssl-native-in-haproxy/
+http://kb.snapt.net/balancer/custom-compile-haproxy-1-5-ssl-support/
+
+http://seanmcgary.com/posts/using-sslhttps-with-haproxy
+
+https://www.digitalocean.com/community/tutorials/how-to-use-haproxy-to-set-up-http-load-balancing-on-an-ubuntu-vps
 
 Pre-built Image   | [https://registry.hub.docker.com/u/dell/haproxy](https://registry.hub.docker.com/u/dell/haproxy) 

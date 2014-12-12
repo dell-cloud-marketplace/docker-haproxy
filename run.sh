@@ -1,46 +1,30 @@
 #!/bin/bash
 
-VOLUME_HOME="/etc/haproxy"
-PATTERN="stats auth"
-PATTERN_URI="stats uri"
+HOME_VOLUME="/etc/haproxy"
+CONFIG_FILE="${HOME_VOLUME}/default.cfg"
 
+# If the home volume is empty...
+if [[ ! "$(ls -A $HOME_VOLUME)" ]]; then
 
-# Test if VOLUME_HOME has content
-if [[ ! "$(ls -A $VOLUME_HOME)" ]]; then
-     echo "Add HAProxy files at $VOLUME_HOME"
-     cp -R /tmp/haproxy/* $VOLUME_HOME
+    # Copy from the backup folder.
+    echo "Adding configuration file at $HOME_VOLUME"
+    cp /tmp/default.cfg $HOME_VOLUME
+
+    # Use the provided password or generate one.
+    if [ $HAPROXY_PASSWORD == "password" ]; then
+        echo "Generating password"
+        HAPROXY_PASSWORD=$(pwgen -s 12 1)
+    fi
+
+    # Add the setting to the config file.
+    echo "    stats   auth $HAPROXY_USERNAME:$HAPROXY_PASSWORD" >> $CONFIG_FILE
+
+    echo "===================================================================="
+    echo "View the stats as $HAPROXY_USERNAME with password $HAPROXY_PASSWORD"
+    echo "===================================================================="
 fi
 
-
-# Add syslog permissions
+# Update the syslog permissions
 chown -R syslog:syslog /var/log/haproxy
-
-# Check username and URI is passed
-if [ -z "$HAPROXY_USERNAME" ]; then
-    export HAPROXY_USERNAME="admin"
-fi  
-
-if [ -z "$HAPROXY_URI" ]; then
-    export HAPROXY_URI="/haproxy?stats"
-fi  
-
-
-# Add HAProxy dashboard credentials
-if [ -n "$HAPROXY_PASSWORD" ]
-then
-  if grep "stats auth" /etc/haproxy/haproxy.cfg
-  then
-	sed -i -e"s,$PATTERN.*,$PATTERN $HAPROXY_USERNAME:$HAPROXY_PASSWORD," \
-		/etc/haproxy/haproxy.cfg
-	sed -i -e"s,$PATTERN_URI.*,$PATTERN_URI ${HAPROXY_URI}," \
-		/etc/haproxy/haproxy.cfg
-  else
-	echo "	$PATTERN $HAPROXY_USERNAME:$HAPROXY_PASSWORD" >> \
-		/etc/haproxy/haproxy.cfg
-	echo "	$PATTERN_URI  $HAPROXY_URI" >> /etc/haproxy/haproxy.cfg
-  fi
-fi
-
-
 
 exec supervisord -n
