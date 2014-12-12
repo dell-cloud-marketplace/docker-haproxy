@@ -7,7 +7,7 @@ The software stack comprises the following components:
 Name       | Version    | Description
 -----------|------------|------------------------------
 Ubuntu     | Trusty     | Operating system
-HAProxy    | 1.4.24     | Load balancing software
+HAProxy    | 1.5.9      | Load balancing software
 
 ## Usage
 The default settings for the image do **not** create a load balancing container. This requires manual configuration, which we will discuss shortly.
@@ -21,7 +21,21 @@ sudo docker run -d -p 8443:8443 --name haproxy dell/haproxy
 Check the container logs for the administrator password:
 
 ```no-highlight
+docker logs haproxy
 ```
+
+You will see some output like the following:
+
+```no-highlight
+Adding configuration file at /etc/haproxy
+Generating password
+====================================================================
+View the stats as admin with password hqQfZIrydI4b
+====================================================================
+```
+
+Make a secure note of user name (**admin**) and password (**hqQfZIrydI4b**).
+
 
 TBC
 
