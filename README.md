@@ -155,9 +155,9 @@ You should see output similar to the following:
 ...: Proxy stats started.
 ...: Proxy inbound started.
 ...: Proxy inbound started.
-...: ... [...] inbound inbound/lamp1 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
-...: ... [...] inbound inbound/lamp2 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
-...: ... [...] inbound inbound/lamp1 0/0/0/1/1 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
+...: ... inbound inbound/lamp1 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
+...: ... inbound inbound/lamp2 0/0/0/2/2 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
+...: ... inbound inbound/lamp1 0/0/0/1/1 200 622 - - ---- 1/1/0/1/0 0/0 "GET / HTTP/1.1"
 ```
 
 You can also check the admin interface - user name, **administrator**, password **mypass** - by (again) doing:
