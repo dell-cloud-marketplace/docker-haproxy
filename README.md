@@ -130,7 +130,7 @@ As follows:
 sudo docker run -d -p 80:80 -p 8443:8443 \
     -v /etc/haproxy:/etc/haproxy \
     -v /var/log/haproxy:/var/log/haproxy \
-    --name haproxy dell/haproxy \
+    --name haproxy dell/haproxy 
 ```
 
 The admin interface is available on port 8443. The LAMP stacks are load balanced on port 80.
@@ -163,7 +163,7 @@ You should see output similar to the following:
 You can also check the admin interface - user name, **administrator**, password **mypass** - by (again) doing:
 
 ```no-highlight 
-https://<ip address>/:8443/haproxy?stats
+https://<ip address>:8443/haproxy?stats
 ```
 
 ## Getting Started
