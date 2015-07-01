@@ -175,5 +175,12 @@ The HAProxy configuration is very comprehensive and can be tuned to your require
 
 ## Reference
 
+### Environmental Variables
+
+Variable         | Default  | Description
+-----------------|----------|----------------------------
+HAPROXY_USERNAME | admin    | The administrator user name
+HAPROXY_PASSWORD | *random* | The administrator password
+
 ### Image Details
 Pre-built Image   | [https://registry.hub.docker.com/u/dell/haproxy](https://registry.hub.docker.com/u/dell/haproxy) 
