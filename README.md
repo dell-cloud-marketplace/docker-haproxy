@@ -130,6 +130,8 @@ As follows:
 sudo docker run -d -p 80:80 -p 8443:8443 \
     -v /etc/haproxy:/etc/haproxy \
     -v /var/log/haproxy:/var/log/haproxy \
+    -e HAPROXY_USERNAME="admin" \
+    -e HAPROXY_PASSWORD="password" \
     --name haproxy dell/haproxy 
 ```
 
