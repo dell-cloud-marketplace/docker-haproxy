@@ -130,6 +130,8 @@ As follows:
 sudo docker run -d -p 80:80 -p 8443:8443 \
     -v /etc/haproxy:/etc/haproxy \
     -v /var/log/haproxy:/var/log/haproxy \
+    -e HAPROXY_USERNAME="admin" \
+    -e HAPROXY_PASSWORD="password" \
     --name haproxy dell/haproxy 
 ```
 
@@ -174,6 +176,13 @@ The HAProxy configuration is very comprehensive and can be tuned to your require
 * [HAProxy Configuration Manual](http://cbonte.github.io/haproxy-dconv/configuration-1.4.html)
 
 ## Reference
+
+### Environmental Variables
+
+Variable         | Default  | Description
+-----------------|----------|----------------------------
+HAPROXY_USERNAME | admin    | The administrator user name
+HAPROXY_PASSWORD | *random* | The administrator password
 
 ### Image Details
 Pre-built Image   | [https://registry.hub.docker.com/u/dell/haproxy](https://registry.hub.docker.com/u/dell/haproxy) 

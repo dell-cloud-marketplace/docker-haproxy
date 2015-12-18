@@ -11,16 +11,13 @@ if [[ ! "$(ls -A $HOME_VOLUME)" ]]; then
     cp /tmp/default.cfg $HOME_VOLUME
 
     # Use the provided password or generate one.
-    if [ $HAPROXY_PASSWORD == "password" ]; then
-        echo "Generating password"
-        HAPROXY_PASSWORD=$(pwgen -s 12 1)
-    fi
+    HAPROXY_PASS=${HAPROXY_PASSWORD:-$(pwgen -s 12 1)}
 
     # Add the setting to the config file.
-    echo "    stats   auth $HAPROXY_USERNAME:$HAPROXY_PASSWORD" >> $CONFIG_FILE
+    echo "    stats   auth $HAPROXY_USERNAME:$HAPROXY_PASS" >> $CONFIG_FILE
 
     echo "===================================================================="
-    echo "View the stats as $HAPROXY_USERNAME with password $HAPROXY_PASSWORD"
+    echo "View the stats as $HAPROXY_USERNAME with password $HAPROXY_PASS"
     echo "===================================================================="
 fi
 

@@ -50,7 +50,7 @@ ADD default.cfg /tmp/
 
 # If the password is not changed, it will be generated in run.sh 
 ENV HAPROXY_USERNAME admin
-ENV HAPROXY_PASSWORD password
+ENV HAPROXY_PASSWORD ""
 
 VOLUME ["/etc/haproxy", "/var/log/haproxy"]
 
